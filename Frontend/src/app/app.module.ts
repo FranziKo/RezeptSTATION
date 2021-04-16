@@ -9,6 +9,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { FriendsComponent } from './friends/friends.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { LoginComponent } from './login/login.component';
+import { FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

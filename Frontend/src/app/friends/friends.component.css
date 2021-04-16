@@ -1,0 +1,21 @@
+td {
+  padding-right: 5px;
+  font-size: 20px;
+}
+
+button {
+  margin: 3px;
+}
+
+.contentBox {
+  padding: 10px 0 20px 0;
+  border-top: solid 1px grey;
+}
+label {
+  font-size: 18px;
+}
+input {
+  font-size: 18px;
+  padding: 3px ;
+  margin: 3px;
+}

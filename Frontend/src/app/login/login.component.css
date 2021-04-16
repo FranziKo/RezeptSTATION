@@ -1,0 +1,18 @@
+
+.login {
+  margin: 30px;
+}
+
+td {
+  padding-right: 5px;
+  font-size: 20px;
+}
+
+input {
+  font-size: 18px;
+  padding: 3px ;
+  margin: 3px;
+}
+a {
+  cursor: pointer;
+}

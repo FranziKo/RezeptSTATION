@@ -1,1 +1,73 @@
-<p>login works!</p>
+
+<div class="login">
+  <div *ngIf="account; then login else register"></div>
+
+  <ng-template #login>
+    <h2>Anmeden</h2>
+    <form>
+      <table>
+        <tr>
+          <td>Benutzername:</td>
+          <td>
+            <label>
+              <input class="login-input" type="text" name="username">
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td>
+            <label>
+              <input name="password" type="password">
+            </label>
+          </td>
+        </tr>
+      </table>
+      <button mat-flat-button color="primary" class="submit" routerLink="homepage">Login</button>
+    </form>
+    <a (click)="account = !account">Noch kein Konto? -> Registrieren</a>
+  </ng-template>
+
+  <ng-template #register>
+    <form>
+      <h2>Registrieren</h2>
+      <table>
+        <tr>
+          <td>E-Mail:</td>
+          <td>
+            <label>
+              <input class="login-input" type="email" name="mail">
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Benutzername:</td>
+          <td>
+            <label>
+              <input class="login-input" type="text" name="username">
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td>
+            <label>
+              <input name="password" type="password">
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Password bestätigen:</td>
+          <td>
+            <label>
+              <input name="password2" type="password">
+            </label>
+          </td>
+        </tr>
+      </table>
+      <button mat-flat-button color="primary" class="submit" routerLink="homepage">Registrieren</button>
+    </form>
+  </ng-template>
+</div>
+
+

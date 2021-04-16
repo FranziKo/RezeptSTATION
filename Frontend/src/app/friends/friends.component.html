@@ -1,1 +1,60 @@
-<p>friends works!</p>
+<div style="margin: 30px">
+  <h1>Freunde</h1>
+
+  <div class="contentBox">
+    <h2>Finde neue Freunde</h2>
+    <form>
+      <label>Benutzername:
+        <input type="text" name="username">
+      </label>
+      <button mat-flat-button color="primary" (click)="searchUser()">Suchen</button>
+    </form>
+
+    <div *ngIf="userList.length > 0">
+      <table>
+        <tr *ngFor="let user of userList">
+          <td>
+            <button mat-mini-fab aria-label="Anfrage schicken" color="primary" matTooltip="Als Freund hinzufügen">
+              <mat-icon>add</mat-icon>
+            </button>
+          </td>
+          <td>{{user}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="contentBox" *ngIf="friendsRequests.length > 0">
+    <h2>Freundschaftsanfragen</h2>
+    <table>
+      <tr *ngFor="let user of friendsRequests">
+        <td>
+          <button mat-mini-fab aria-label="Anfrage annehmen" matTooltip="Anfrage annehmen">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button color="warn" mat-mini-fab aria-label="Anfrage ablehnen" matTooltip="Anfrage ablehnen">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </td>
+        <td>{{user.name}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="contentBox">
+    <h2>Meine Freunde</h2>
+    <table>
+      <tr *ngFor="let freind of myFriends">
+        <td>
+          <button color="warn" mat-mini-fab aria-label="Frend entfernen" matTooltip="{{freind}} entfernen">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+        <td>{{freind}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+
