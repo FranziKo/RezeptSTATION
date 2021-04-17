@@ -1,1 +1,72 @@
-<p>recipes works!</p>
+<div class="content">
+  <div class="header">
+    <br>
+    <br>
+<h1 class="header">Rezeptname </h1>
+    <button mat-stroked-button color="primary" class="btn_save" id="btn_save">Speichern</button>
+    <button mat-stroked-button color="primary" class="btn_cancel" id="btn_cancel">Abbrechen</button>
+  <button (click)="edit()" id="edit" style="margin-left: 150px" mat-icon-button aria-label="Example icon button with a vertical three dot icon" class="header">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button id="delete" mat-icon-button aria-label="Example icon button with a vertical three dot icon" class="header">
+    <mat-icon>delete</mat-icon>
+  </button>
+    <hr>
+    <br>
+    <br>
+  </div>
+<div class="body">
+  <div class="img">
+  <img src="https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_1280.png" width="150" alt="Mountain">
+  </div>
+  <div class="tags">
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+  <mat-chip color="primary" selected><mat-icon>
+    query_builder</mat-icon>Dauer</mat-chip>
+  <mat-chip color="primary" selected>Schwierigkeit</mat-chip>
+  <mat-chip color="primary" selected>Autor</mat-chip>
+</mat-chip-list>
+
+
+
+
+    <!--<mat-form-field appearance="fill">
+      <mat-label>Foto hochladen...</mat-label>
+      <input type="file" #fileInput id="uploadFile" name="uploadFile" multiple="multiple"
+             accept="image/*"/>
+    </mat-form-field>
+    <br> -->
+    <mat-form-field appearance="fill">
+      <mat-label>Dauer</mat-label>ng
+      <input matInput placeholder="Dauer" height="10">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Schwierigkeit</mat-label>
+      <input matInput placeholder="Schwierigkeit">
+    </mat-form-field>
+    <br/>
+    <br>
+    <br>
+  </div>
+</div>
+  <div class="footer">
+    <br>
+<h3>Zutaten:</h3>
+<ul id="Zutatenliste">
+  <li>    <button mat-stroked-button color="primary" class="btn_add" id="btn_addIngredient">Zutat hinzufügen</button>
+  </li>
+</ul>
+<h3>Anweisungen:</h3>
+    <ol id="Anweisungsliste">
+      <li>    <button mat-stroked-button color="primary" class="btn_add" id="btn_addStep">Schritt hinzufügen</button>
+      </li>
+    </ol>
+  </div>
+</div>
+
+
+
+
+
+
