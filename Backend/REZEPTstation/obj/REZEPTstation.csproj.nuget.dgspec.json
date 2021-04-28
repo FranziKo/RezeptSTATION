@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\desan\\Documents\\DHBW\\4. Semester\\WebEngineering2\\REZEPTstation\\REZEPTstation\\REZEPTstation.csproj": {}
+    "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\desan\\Documents\\DHBW\\4. Semester\\WebEngineering2\\REZEPTstation\\REZEPTstation\\REZEPTstation.csproj": {
+    "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\desan\\Documents\\DHBW\\4. Semester\\WebEngineering2\\REZEPTstation\\REZEPTstation\\REZEPTstation.csproj",
+        "projectUniqueName": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
         "projectName": "REZEPTstation",
-        "projectPath": "C:\\Users\\desan\\Documents\\DHBW\\4. Semester\\WebEngineering2\\REZEPTstation\\REZEPTstation\\REZEPTstation.csproj",
+        "projectPath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
         "packagesPath": "C:\\Users\\desan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\desan\\Documents\\DHBW\\4. Semester\\WebEngineering2\\REZEPTstation\\REZEPTstation\\obj\\",
+        "outputPath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\desan\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XI2L7j4F+Myz3UcXJ7Jr7eDgynwsZLt2AxECGO9VmKcu7JEoA7G+1rW6l1TCYQmsx1N45OPd4JYwQbYhtjPrSw==",
+  "dgSpecHash": "VtFZZAJR2uTxk8FlRNo4KJh1NcuNIJNaVNdVJ4KitoruA+4W/0mrOKm/mhLkloCOiZLcZR+yMePsIUlnbP4wtg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\desan\\Documents\\DHBW\\4. Semester\\WebEngineering2\\REZEPTstation\\REZEPTstation\\REZEPTstation.csproj",
+  "projectFilePath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\desan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\desan\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\5.0.5\\microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.5.nupkg.sha512",
