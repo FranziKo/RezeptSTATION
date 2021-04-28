@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj": {}
+    "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj": {
+    "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
+        "projectUniqueName": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
         "projectName": "REZEPTstation",
-        "projectPath": "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
-        "packagesPath": "C:\\Users\\Franziska Kopp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\obj\\",
+        "projectPath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
+        "packagesPath": "C:\\Users\\desan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Franziska Kopp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\desan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
