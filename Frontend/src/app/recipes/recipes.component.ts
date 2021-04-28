@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable, throwError} from 'rxjs';
+import {catchError, retry} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipes',
@@ -6,13 +9,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recipes.component.css']
 })
 export class RecipesComponent implements OnInit {
+  public recipe = "test";
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+    http.get("https://localhost:44336/" + 'api/TodoItems', { responseType: 'text'}).subscribe(result => {
+      console.log("Result:" + result);
+      if (result !== undefined){
+        this.recipe = result;
+        const list = document.getElementById('Zutatenliste');
+        const ingredient = document.createElement('li');
+        list.appendChild(ingredient);
+        const text = document.createElement('label');
+        text.textContent = result;
+        ingredient.appendChild(text);
+        console.log("Recipe:" + this.recipe);
+      }
+    }, error => console.error(error));
+  }
 
   ngOnInit(): void {
   }
 
   edit(){
+
     const btn_edit = document.getElementById('edit');
     const btn_delete = document.getElementById('delete');
     btn_edit.style.display='none';
@@ -26,7 +45,6 @@ export class RecipesComponent implements OnInit {
     addIngredient.addEventListener('click', (e) => {
       this.addIngredient();
     });
-
     const addAnweisung = document.getElementById('btn_addStep');
     addAnweisung.style.display = 'inline';
     addAnweisung.addEventListener('click', (e) => {
