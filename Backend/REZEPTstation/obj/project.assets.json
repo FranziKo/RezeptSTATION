@@ -7420,6 +7420,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 5.0.5",
+      "Microsoft.EntityFrameworkCore >= 5.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.4",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
@@ -7428,19 +7429,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\desan\\.nuget\\packages\\": {}
+    "C:\\Users\\Franziska Kopp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
+      "projectUniqueName": "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
       "projectName": "REZEPTstation",
-      "projectPath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
-      "packagesPath": "C:\\Users\\desan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\desan\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\obj\\",
+      "projectPath": "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\REZEPTstation.csproj",
+      "packagesPath": "C:\\Users\\Franziska Kopp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Franziska Kopp\\WebstormProjects\\RezeptSTATION\\Backend\\REZEPTstation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\desan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Franziska Kopp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7467,6 +7468,10 @@
         "targetAlias": "net5.0",
         "dependencies": {
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[5.0.5, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[5.0.5, )"
           },
@@ -7511,7 +7516,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
