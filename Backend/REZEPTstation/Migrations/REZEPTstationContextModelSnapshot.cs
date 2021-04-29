@@ -213,6 +213,12 @@ namespace REZEPTstation.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Username")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 

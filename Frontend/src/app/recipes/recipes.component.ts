@@ -103,12 +103,14 @@ export class RecipesComponent implements OnInit {
   }
 
   speichern(){
+
     const btn_edit = document.getElementById('edit');
     const btn_delete = document.getElementById('delete');
     const btn_save = document.getElementById('btn_save');
     const btn_cancel = document.getElementById('btn_cancel');
     const btn_addIngredient = document.getElementById('btn_addIngredient');
     const btn_addStep = document.getElementById('btn_addStep');
+
     btn_edit.style.display='inline'
     btn_delete.style.display='inline'
     btn_save.style.display='none';
@@ -145,6 +147,9 @@ export class RecipesComponent implements OnInit {
     editTag2.style.display='none';
     const btn_addPic = document.getElementById('btn_addPic');
     btn_addPic.style.display='none';
+  }
+  post(){
+
   }
 
 }

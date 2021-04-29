@@ -36,6 +36,7 @@
              accept="image/*"/>
     </mat-form-field>
     <br> -->
+
     <mat-form-field appearance="fill">
       <mat-label>Dauer</mat-label>ng
       <input matInput placeholder="Dauer" height="10">
@@ -45,6 +46,12 @@
       <mat-label>Schwierigkeit</mat-label>
       <input matInput placeholder="Schwierigkeit">
     </mat-form-field>
+
+    <form method="post">
+      <input type = "hidden" value = "1" name="UserID"/>
+      <input type = "text" name="Name" id = "rezeptname"/>
+      <input type = "submit" (click)="post()"/>
+    </form>
     <br/>
     <br>
     <br>
