@@ -24,7 +24,12 @@ namespace REZEPTstation
 
             string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<REZEPTstationContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
-
+            services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    builder =>
+                    { builder.WithOrigins("http://localhost:4200");
+                 });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -41,6 +46,7 @@ namespace REZEPTstation
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "REZEPTstation v1"));
             }
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
