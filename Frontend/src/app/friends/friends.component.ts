@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from "../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-friends',
@@ -10,9 +12,12 @@ export class FriendsComponent implements OnInit {
   friendsRequests: Array<{name: string, id: number}> = [{name:"username1", id: 123}, {name: "user2", id: 234}];
   userList: string[] = [];
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.userService.userData.UserID===null){
+      this.router.navigateByUrl('login');
+    }
   }
 
   searchUser(): void {

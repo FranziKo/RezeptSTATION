@@ -23,9 +23,10 @@ namespace REZEPTstation.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.User.Select(u => UserDTO(u)).ToListAsync();
+            
         }
 
         // GET: api/Users/5
@@ -73,15 +74,57 @@ namespace REZEPTstation.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        // POST: api/Users/Login
+        [HttpPost("Login")]
+        public async Task<ActionResult<UserDTO>> LoginUser(User user)
         {
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
+            //_context.User.Add(user);
+            //await _context.SaveChangesAsync();
+            List<User> userList = _context.User.ToList();
+            var loginAcceptes = false;
+            userList.ForEach(u =>
+            {
+                if (u.Username == user.Username && u.Password==user.Password)
+                {
+                    loginAcceptes = true;
+                }
+            });
+            if (loginAcceptes)
+            {
+                return CreatedAtAction("GetUser", UserDTO(user));
+            }
+            return NotFound();
+            
+            
+        }
 
-            return CreatedAtAction("GetUser", new { id = user.UserID }, user);
+
+        // POST: api/Users/Register
+        [HttpPost("Register")]
+        public async Task<ActionResult<User>> RegistertUser(User user)
+        {
+            List<User> userList = _context.User.ToList();
+            var existingUser = false;
+            userList.ForEach(u =>
+            {
+                if (u.Username==user.Username || u.Email==user.Email)
+                {
+                    existingUser = true;
+                }
+            });
+            if (existingUser)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                _context.User.Add(user);
+                await _context.SaveChangesAsync();
+                
+                return CreatedAtAction("GetUser", UserDTO(user));
+            }
+
+            
         }
 
         // DELETE: api/Users/5
@@ -104,5 +147,12 @@ namespace REZEPTstation.Controllers
         {
             return _context.User.Any(e => e.UserID == id);
         }
+
+        private static UserDTO UserDTO(User user) =>
+            new UserDTO
+            {
+                UserID = user.UserID,
+                Username = user.Username,
+            };
     }
 }

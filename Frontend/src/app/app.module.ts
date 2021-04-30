@@ -8,7 +8,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { FriendsComponent } from './friends/friends.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,13 +19,15 @@ import { FormsModule} from '@angular/forms';
     RecipesComponent,
     LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

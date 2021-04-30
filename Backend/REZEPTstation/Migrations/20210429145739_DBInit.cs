@@ -26,7 +26,9 @@ namespace REZEPTstation.Migrations
                 {
                     UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
+                    Username = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    Password = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    Email = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
                 },
                 constraints: table =>
                 {

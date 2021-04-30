@@ -3,14 +3,14 @@
   <div *ngIf="account; then login else register"></div>
 
   <ng-template #login>
-    <h2>Anmeden</h2>
-    <form>
+    <h2>Anmelden</h2>
+    <form [formGroup]="loginForm">
       <table>
         <tr>
           <td>Benutzername:</td>
           <td>
             <label>
-              <input class="login-input" type="text" name="username">
+              <input class="login-input" type="text" formControlName="userName" required>
             </label>
           </td>
         </tr>
@@ -18,25 +18,27 @@
           <td>Password:</td>
           <td>
             <label>
-              <input name="password" type="password">
+              <input type="password" formControlName="password" required>
             </label>
           </td>
         </tr>
       </table>
-      <button mat-flat-button color="primary" class="submit" routerLink="homepage">Login</button>
+      <button (click)="onSubmitLogin()" mat-flat-button color="primary" [disabled]="!loginForm.valid" type="submit">
+        Login
+      </button>
     </form>
     <a (click)="account = !account">Noch kein Konto? -> Registrieren</a>
   </ng-template>
 
   <ng-template #register>
-    <form>
+    <form [formGroup]="registerForm">
       <h2>Registrieren</h2>
       <table>
         <tr>
           <td>E-Mail:</td>
           <td>
             <label>
-              <input class="login-input" type="email" name="mail">
+              <input class="login-input" type="email" formControlName="email" required>
             </label>
           </td>
         </tr>
@@ -44,7 +46,7 @@
           <td>Benutzername:</td>
           <td>
             <label>
-              <input class="login-input" type="text" name="username">
+              <input class="login-input" type="text" formControlName="userName" required>
             </label>
           </td>
         </tr>
@@ -52,7 +54,7 @@
           <td>Password:</td>
           <td>
             <label>
-              <input name="password" type="password">
+              <input name="password" type="password" formControlName="password" required>
             </label>
           </td>
         </tr>
@@ -60,13 +62,16 @@
           <td>Password bestätigen:</td>
           <td>
             <label>
-              <input name="password2" type="password">
+              <input name="password2" type="password" required>
             </label>
           </td>
         </tr>
       </table>
-      <button mat-flat-button color="primary" class="submit" routerLink="homepage">Registrieren</button>
+      <button mat-flat-button (click)="onSubmitRegister()" color="primary" [disabled]="!registerForm.valid" type="submit">
+        Registrieren
+      </button>
     </form>
+    <a (click)="account = !account">Zurück zum Login</a>
   </ng-template>
 </div>
 

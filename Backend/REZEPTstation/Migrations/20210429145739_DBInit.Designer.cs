@@ -8,7 +8,7 @@ using REZEPTstation.Data;
 namespace REZEPTstation.Migrations
 {
     [DbContext(typeof(REZEPTstationContext))]
-    [Migration("20210428122319_DBInit")]
+    [Migration("20210429145739_DBInit")]
     partial class DBInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,6 +214,12 @@ namespace REZEPTstation.Migrations
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Username")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
