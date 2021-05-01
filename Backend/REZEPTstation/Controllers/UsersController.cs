@@ -87,6 +87,7 @@ namespace REZEPTstation.Controllers
                 if (u.Username == user.Username && u.Password==user.Password)
                 {
                     loginAcceptes = true;
+                    user = u;
                 }
             });
             if (loginAcceptes)
