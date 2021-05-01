@@ -13,6 +13,7 @@ namespace REZEPTstation.Models
 
         public bool Visible { get; set; }
         public int UserID { get; set; }
+        public string PictureEncoded { get; set; }
         
     }
 }

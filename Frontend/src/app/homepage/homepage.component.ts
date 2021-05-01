@@ -12,10 +12,9 @@ export class HomepageComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
-    if (this.userService.userData.UserID===null){
+   /*  if (this.userService.userData.UserID===null){
       this.router.navigateByUrl('login');
-    }
-
+    }*/
   }
 
 }

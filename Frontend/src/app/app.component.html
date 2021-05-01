@@ -4,7 +4,7 @@
     <span class="menu-spacer"></span>
     <div>
       <a mat-button [routerLink]="'homepage'"> Startseite </a>
-      <a mat-button [routerLink]="'recipes'"> Rezepte hinzufügen</a>
+      <a mat-button  (click)="addRecipe()"> Rezepte hinzufügen</a>
       <a mat-button [routerLink]="'friends'"> Freunde </a>
       <a mat-button (click)="logout()" [routerLink]="'login'" class="btn_abmelden"> Abmelden </a>
     </div>
