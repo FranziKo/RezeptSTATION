@@ -2,8 +2,8 @@
   <div class="header">
     <br>
     <br>
-<h1 class="header">Rezeptname </h1>
-    <button mat-stroked-button color="primary" class="btn_save" id="btn_save">Speichern</button>
+<h1 class="header" id="rezeptname" >Rezeptname </h1>
+    <button mat-stroked-button color="primary" class="btn_save" id="btn_save" type="submit">Speichern</button>
     <button mat-stroked-button color="primary" class="btn_cancel" id="btn_cancel">Abbrechen</button>
   <button (click)="edit()" id="edit" style="margin-left: 150px" mat-icon-button aria-label="Example icon button with a vertical three dot icon" class="header">
     <mat-icon>edit</mat-icon>
@@ -37,8 +37,8 @@
     </mat-form-field>
     <br> -->
 
-    <mat-form-field appearance="fill">
-      <mat-label>Dauer</mat-label>ng
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Dauer</mat-label>
       <input matInput placeholder="Dauer" height="10">
     </mat-form-field>
     <br>
@@ -46,12 +46,42 @@
       <mat-label>Schwierigkeit</mat-label>
       <input matInput placeholder="Schwierigkeit">
     </mat-form-field>
+    <br>
+    <mat-radio-button value="1">Öffentlich</mat-radio-button> -->
+    <div id="recipeData" style="display: none">
+      <mat-label>Bild hochalden: </mat-label>
+      <input id="picture" type="file" accept="image/*" (change)="uploadPicture()"/>
+      <br/>
+      <br/>
+    <mat-label>Dauer:</mat-label>
+    <input type = "text" id="duration"/>
+    <br/>
+    <br/>
+    <mat-label>Schwierigkeit:</mat-label>
+    <input type = "text" id="difficulty"/>
+    <br/>
+    <br/>
+      <mat-label>Öffentlich</mat-label>
+      <input type="checkbox" id="btn_visible"/>
+      <br/>
+      <br/>
+      <!-- <mat-checkbox value="1" id="btn_visible">Öffentlich</mat-checkbox> -->
+      <mat-form-field appearance="fill">
+        <mat-label>Kategorien</mat-label>
+        <mat-select [formControl]="categories" id ="categories" multiple>
+          <mat-option (onSelectionChange)="getCategory($event)" *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <form method="post">
+    </div>
+
+
+
+  <!--  <form method="post">
       <input type = "hidden" value = "1" name="UserID"/>
       <input type = "text" name="Name" id = "rezeptname"/>
       <input type = "submit" (click)="post()"/>
-    </form>
+    </form> -->
     <br/>
     <br>
     <br>

@@ -172,6 +172,9 @@ namespace REZEPTstation.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("PictureEncoded")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
