@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using REZEPTstation.Data;
@@ -30,9 +28,10 @@ namespace REZEPTstation.Controllers
 
         // GET: api/FriendsRequests/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FriendsRequest>> GetFriendsRequest(int id)
+        public async Task<ActionResult<IEnumerable<FriendsRequest>>> GetFriendsRequest(int id)
         {
-            var friendsRequest = await _context.FriendsRequest.FindAsync(id);
+            var friendsRequest = await _context.FriendsRequest
+                .Where(r => r.UserID2 == id).ToListAsync();
 
             if (friendsRequest == null)
             {
@@ -42,6 +41,7 @@ namespace REZEPTstation.Controllers
             return friendsRequest;
         }
 
+        /*
         // PUT: api/FriendsRequests/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -72,7 +72,7 @@ namespace REZEPTstation.Controllers
 
             return NoContent();
         }
-
+        /*
         // POST: api/FriendsRequests
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -83,6 +83,51 @@ namespace REZEPTstation.Controllers
 
             return CreatedAtAction("GetFriendsRequest", new { id = friendsRequest.RequestID }, friendsRequest);
         }
+        */
+
+        // POST: api/FriendsRequests
+        [HttpPost]
+        public async Task<ActionResult<FriendsRequest>> PostFriendsRequest(FriendsRequest friendsRequest)
+        {
+            var requests = await _context.FriendsRequest.ToListAsync();
+            var friends = await _context.Friends.ToListAsync();
+
+            bool alreadyExisting = false;
+
+            requests.ForEach(r =>
+            {
+                if (r.UserID1 == friendsRequest.UserID1 && r.UserID2 == friendsRequest.UserID2)
+                {
+                    alreadyExisting = true;
+                }
+                if (r.UserID1 == friendsRequest.UserID2 && r.UserID2 == friendsRequest.UserID1)
+                {
+                    alreadyExisting = true;
+                }
+            });
+            friends.ForEach(f =>
+            {
+                if (f.UserID1 == friendsRequest.UserID1 && f.UserID2 == friendsRequest.UserID2)
+                {
+                    alreadyExisting = true;
+                }
+                if (f.UserID1 == friendsRequest.UserID2 && f.UserID2 == friendsRequest.UserID1)
+                {
+                    alreadyExisting = true;
+                }
+            });
+
+            if (alreadyExisting == true)
+            {
+                return BadRequest();
+            }
+
+            _context.FriendsRequest.Add(friendsRequest);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetFriendsRequest", new { id = friendsRequest.RequestID }, friendsRequest);
+        }
+        
 
         // DELETE: api/FriendsRequests/5
         [HttpDelete("{id}")]
@@ -104,5 +149,8 @@ namespace REZEPTstation.Controllers
         {
             return _context.FriendsRequest.Any(e => e.RequestID == id);
         }
+
+      
     }
+           
 }
