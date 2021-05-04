@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  userData: any = {UserID: null, UserName: ''};
+  userData: any = {userID: null, userName: ''};
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -16,7 +16,7 @@ export class UserService {
         this.userData = user;
         console.log(this.userData);
         this.router.navigateByUrl('homepage');
-      }, (() => alert("Es gibt bereits einen Benutzer mit diesem Benutzername oder Mail")));
+      }, (() => alert('Es gibt bereits einen Benutzer mit diesem Benutzername oder Mail')));
   }
 
   postLogin(userData: any): void {
@@ -25,7 +25,7 @@ export class UserService {
         this.userData = user;
         console.log(this.userData);
         this.router.navigateByUrl('homepage');
-      }, (() => alert("Benutzername oder Passwort ist falsch!")));
+      }, (() => alert('Benutzername oder Passwort ist falsch!')));
   }
 
   logout(): void {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using REZEPTstation.Data;
@@ -30,9 +28,9 @@ namespace REZEPTstation.Controllers
 
         // GET: api/Friends/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Friends>> GetFriends(int id)
+        public async Task<ActionResult<IEnumerable<Friends>>> GetFriends(int id)
         {
-            var friends = await _context.Friends.FindAsync(id);
+            var friends = await _context.Friends.Where(f => f.UserID1 == id || f.UserID2 == id).ToListAsync();
 
             if (friends == null)
             {
@@ -42,6 +40,7 @@ namespace REZEPTstation.Controllers
             return friends;
         }
 
+        /*
         // PUT: api/Friends/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -72,6 +71,7 @@ namespace REZEPTstation.Controllers
 
             return NoContent();
         }
+        */
 
         // POST: api/Friends
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

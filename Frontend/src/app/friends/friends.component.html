@@ -3,22 +3,22 @@
 
   <div class="contentBox">
     <h2>Finde neue Freunde</h2>
-    <form>
+    <form [formGroup]="findFriendsForm">
       <label>Benutzername:
-        <input type="text" name="username">
+        <input type="text" formControlName="name" required>
       </label>
-      <button mat-flat-button color="primary" (click)="searchUser()">Suchen</button>
+      <button mat-flat-button color="primary" (click)="searchUsers()">Suchen</button>
     </form>
 
     <div *ngIf="userList.length > 0">
       <table>
         <tr *ngFor="let user of userList">
           <td>
-            <button mat-mini-fab aria-label="Anfrage schicken" color="primary" matTooltip="Als Freund hinzufügen">
+            <button (click)="sendRequest(user.userID)" mat-mini-fab aria-label="Anfrage schicken" color="primary" matTooltip="Als Freund hinzufügen">
               <mat-icon>add</mat-icon>
             </button>
           </td>
-          <td>{{user}}</td>
+          <td>{{user.username}}</td>
         </tr>
       </table>
     </div>
@@ -27,16 +27,16 @@
   <div class="contentBox" *ngIf="friendsRequests.length > 0">
     <h2>Freundschaftsanfragen</h2>
     <table>
-      <tr *ngFor="let user of friendsRequests">
+      <tr *ngFor="let request of friendsRequests">
         <td>
-          <button mat-mini-fab aria-label="Anfrage annehmen" matTooltip="Anfrage annehmen">
+          <button (click)="confirmRequest(request)" mat-mini-fab aria-label="Anfrage annehmen" matTooltip="Anfrage annehmen">
             <mat-icon>check</mat-icon>
           </button>
-          <button color="warn" mat-mini-fab aria-label="Anfrage ablehnen" matTooltip="Anfrage ablehnen">
+          <button (click)="deleteRequest(request)" color="warn" mat-mini-fab aria-label="Anfrage ablehnen" matTooltip="Anfrage ablehnen">
             <mat-icon>clear</mat-icon>
           </button>
         </td>
-        <td>{{user.name}}</td>
+        <td>{{request.username}}</td>
       </tr>
     </table>
   </div>
@@ -44,13 +44,13 @@
   <div class="contentBox">
     <h2>Meine Freunde</h2>
     <table>
-      <tr *ngFor="let freind of myFriends">
+      <tr *ngFor="let friend of myFriends">
         <td>
-          <button color="warn" mat-mini-fab aria-label="Frend entfernen" matTooltip="{{freind}} entfernen">
+          <button (click)="deleteFriend(friend)" color="warn" mat-mini-fab aria-label="Frend entfernen" matTooltip="{{friend.username}} entfernen">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
-        <td>{{freind}}</td>
+        <td>{{friend.username}}</td>
       </tr>
     </table>
   </div>
