@@ -9,7 +9,7 @@ namespace REZEPTstation.Models
         public int RecipeID { get; set; }
         public string Name { get; set; }
         public string Difficulty { get; set; }
-        public int Duration { get; set; }
+        public string Duration { get; set; }
 
         public bool Visible { get; set; }
         public int UserID { get; set; }

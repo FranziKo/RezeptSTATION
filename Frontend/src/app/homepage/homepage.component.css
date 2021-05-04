@@ -1,3 +1,12 @@
 .content {
   margin: 20px;
 }
+.mat-chip-list .mat-chip {
+  width: auto;
+  min-height: max-content;
+  min-width: 0;
+}
+
+.table {
+  margin-left: 300px;
+}
