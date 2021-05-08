@@ -95,8 +95,6 @@ namespace REZEPTstation.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<UserDTO>> LoginUser(User user)
         {
-            //_context.User.Add(user);
-            //await _context.SaveChangesAsync();
             List<User> userList = _context.User.ToList();
             var loginAcceptes = false;
             userList.ForEach(u =>

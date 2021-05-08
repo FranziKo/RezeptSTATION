@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import sha256 from 'crypto-js/sha256';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ export class UserService {
   constructor(private http: HttpClient, private router: Router) { }
 
   postRegister(userData: any): void {
+    userData.password =sha256(userData.password).toString();
     this.http.post('https://localhost:44357/api/Users/Register', userData)
       .subscribe((user:{UserID: number, UserName: string}) => {
         this.userData = user;
@@ -20,10 +23,11 @@ export class UserService {
   }
 
   postLogin(userData: any): void {
+    userData.password =sha256(userData.password).toString();
+
     this.http.post('https://localhost:44357/api/Users/Login', userData)
       .subscribe((user) => {
         this.userData = user;
-        console.log(this.userData);
         this.router.navigateByUrl('homepage');
       }, (() => alert('Benutzername oder Passwort ist falsch!')));
   }
