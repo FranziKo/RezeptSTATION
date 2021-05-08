@@ -1,5 +1,26 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
+
+    <span id="menu">
+      <a mat-button>
+        <mat-icon class="menu-icon" [matMenuTriggerFor]="menu">menu</mat-icon>
+      </a>
+      <mat-menu #menu="matMenu">
+      <button [routerLink]="'homepage'" mat-menu-item>
+        <mat-icon>home</mat-icon>Startseite
+      </button>
+      <button mat-menu-item routerLink="/create">
+        <mat-icon>library_books</mat-icon>Rezepte hinzufügen
+      </button>
+      <button mat-menu-item [routerLink]="'friends'">
+        <mat-icon>supervisor_account</mat-icon>Freunde
+      </button>
+      <button (click)="logout()" [routerLink]="'login'" mat-menu-item>
+        <mat-icon>cancel</mat-icon>Abmelden
+      </button>
+    </mat-menu>
+  </span>
+
     <h1>REZEPTstation</h1>
     <span class="menu-spacer"></span>
     <div>
@@ -8,6 +29,8 @@
       <a mat-button [routerLink]="'friends'" (click)="cancel()"> Freunde </a>
       <a mat-button (click)="logout()" [routerLink]="'login'" class="btn_abmelden"> Abmelden </a>
     </div>
+
+
   </mat-toolbar-row>
 </mat-toolbar>
 
