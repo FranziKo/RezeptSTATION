@@ -42,6 +42,20 @@ namespace REZEPTstation.Controllers
             return steps;
         }
 
+        // GET: api/Steps/Find/Recipe
+        [HttpGet("Find/{recipeId}")]
+        public async Task<ActionResult<IEnumerable<Steps>>> GetStepsRecipe(int recipeId)
+        {
+            var steps = await _context.Steps.Where(s => s.RecipeID.Equals(recipeId)).ToListAsync();
+
+            if (steps == null)
+            {
+                return NotFound();
+            }
+
+            return steps;
+        }
+
         // PUT: api/Steps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

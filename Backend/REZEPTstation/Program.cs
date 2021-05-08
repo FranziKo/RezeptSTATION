@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using REZEPTstation.Data;
+using Microsoft.AspNetCore;
+using System.IO;
 
 namespace REZEPTstation
 {
@@ -16,11 +18,11 @@ namespace REZEPTstation
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             CreateDbIfNotExists(host);
 
             host.Run();
         }
+
         private static void CreateDbIfNotExists(IHost host)
         {
             using (var scope = host.Services.CreateScope())

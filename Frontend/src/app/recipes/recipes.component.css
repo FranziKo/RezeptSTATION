@@ -61,8 +61,13 @@ mat-label{
 }
 
 mat-form-field{
-  display: none;
+
 }
 
+table{
+  padding: 10px;
+  background-color: #bdbdbd;
+  border-radius: 25px
+}
 
 

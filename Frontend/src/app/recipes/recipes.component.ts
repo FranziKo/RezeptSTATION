@@ -15,30 +15,15 @@ import {RecipeService} from "../services/recipe.service";
 
 
 export class RecipesComponent implements OnInit {
+  favoritesList: any = {RecipeID: 0, UserID: 0};
   categories = new FormControl();
   categoryList: string[] = [];
   categoryIDName: {CategoryID: undefined, Name: string}[] = [];
   assignCategoryList: number[] = [];
-  recipeData: any = {RecipeID: 0, Name: '', Difficulty: '', Duration: 5, Visible: false, UserID: 0, PictureEncoded: ''};
-  ingredientData: {IngredientID: undefined, Name: string, RecipeID: number}[] = [];
-  stepsData: {StepID: undefined, Number: number, describtion: string, RecipeID: number}[] = [];
+  recipeData: any = {RecipeID: 0, Name: '', Difficulty: '', Duration: '5', Visible: false, UserID: 0, PictureEncoded: ''};
+  ingredientData: {IngredientID: string, Name: string, RecipeID: number}[] = [];
+  stepsData: {StepID: string, Number: number, describtion: string, RecipeID: number}[] = [];
   public newRecipe = 0;
-
- /* constructor(private http: HttpClient) {
-    http.get("https://localhost:44336/" + 'api/TodoItems', { responseType: 'text'}).subscribe(result => {
-      console.log("Result:" + result);
-      if (result !== undefined){
-        this.recipe = result;
-        const list = document.getElementById('Zutatenliste');
-        const ingredient = document.createElement('li');
-        list.appendChild(ingredient);
-        const text = document.createElement('label');
-        text.textContent = result;
-        ingredient.appendChild(text);
-        console.log("Recipe:" + this.recipe);
-      }
-    }, error => console.error(error));
-  } */
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService, public recipeService: RecipeService) {
     http.get("https://localhost:44357/" + 'api/Categories', {responseType: 'json'}).subscribe(result => {
@@ -127,6 +112,57 @@ export class RecipesComponent implements OnInit {
         }
         console.log(jsonResult);
       });
+      const zutatenliste = document.getElementById('Zutatenliste').childElementCount;
+      for (var i=0; i<zutatenliste-1; i++){
+        const first = document.getElementById('Zutatenliste').firstChild;
+        document.getElementById('Zutatenliste').removeChild(first);
+      }
+      const anweisungsliste = document.getElementById('Anweisungsliste').childElementCount;
+      for (var i=0; i<anweisungsliste-1; i++){
+        const first = document.getElementById('Anweisungsliste').firstChild;
+        document.getElementById('Anweisungsliste').removeChild(first);
+      }
+      this.http.get("https://localhost:44357/" + 'api/Ingredients/Find/' + this.recipeService.currentRecipe, {responseType: 'json'}).subscribe(result => {
+        const jsonResult = JSON.parse(JSON.stringify(result));
+        for (let i=0; i< jsonResult.length; i++){
+          const list = document.getElementById('Zutatenliste');
+          const last = list.lastChild;
+          const ingredient = document.createElement('li');
+          const text = document.createElement('input');
+          text.value = jsonResult[i].name;
+          text.textContent = jsonResult[i].ingredientID;
+          list.insertBefore(ingredient, last);
+          const btn_delete = document.createElement('button');
+          btn_delete.textContent="X";
+          btn_delete.style.marginLeft='10px';
+          btn_delete.addEventListener('click', (e) => {
+            this.deleteIngredient(e);
+          })
+          list.insertBefore(ingredient, list.lastChild)
+          ingredient.appendChild(text);
+          ingredient.appendChild(btn_delete);
+        }
+      });
+      this.http.get("https://localhost:44357/" + 'api/Steps/Find/' + this.recipeService.currentRecipe, {responseType: 'json'}).subscribe(result => {
+        const jsonResult = JSON.parse(JSON.stringify(result));
+        for (let i=0; i< jsonResult.length; i++){
+          const list = document.getElementById('Anweisungsliste');
+          const last = list.lastChild;
+          const step = document.createElement('li');
+          const text = document.createElement('textarea');
+          text.value = jsonResult[i].describtion;
+          list.insertBefore(step, last);
+          const btn_delete = document.createElement('button');
+          btn_delete.textContent="X";
+          btn_delete.style.marginLeft='10px';
+          btn_delete.addEventListener('click', (e) => {
+            this.deleteIngredient(e);
+          })
+          list.insertBefore(step, list.lastChild)
+          step.appendChild(text);
+          step.appendChild(btn_delete);
+        }
+      });
     }
   }
 
@@ -168,16 +204,14 @@ export class RecipesComponent implements OnInit {
   speichern(){
     const rezeptname = document.getElementById('rezeptname').textContent;
     this.recipeData.Name = rezeptname;
+    this.recipeData.RecipeID = this.recipeService.currentRecipe;
     this.recipeData.Difficulty = (document.getElementById('difficulty') as HTMLInputElement).value;
-    this.recipeData.Duration = parseInt((document.getElementById('duration') as HTMLInputElement).value);
+    this.recipeData.Duration = (document.getElementById('duration') as HTMLInputElement).value;
     this.recipeData.Visible = (document.getElementById('btn_visible') as HTMLInputElement).checked;
-    this.recipeData.UserID = 2;
-    // this.recipeData.UserID = this.userService.userData.UserID;
-    console.log(this.userService.userData.UserID);
+    this.recipeData.UserID = this.userService.userData.userID;
     this.recipeData = JSON.stringify(this.recipeData);
-    console.log(this.recipeData);
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-    if (this.recipeService.currentRecipe == undefined) {
+    if (this.recipeService.currentRecipe === undefined) {
       this.http.post('https://localhost:44357/api/Recipes', this.recipeData, {headers: headers})
         .subscribe((recipe:{recipeID: number}) => {
           const ingredients = document.getElementById('Zutatenliste').childNodes;
@@ -204,16 +238,56 @@ export class RecipesComponent implements OnInit {
           alert("Rezept wurde gespeichert!");
         }, (() => alert("Rezept konnte nicht angelegt werden!")));
     } else {
-      // this.recipeData.RecipeID = this.recipeService.currentRecipe;
-      // this.recipeData.Name = document.getElementById('rezeptname').textContent;
-      /* const rezeptname = document.getElementById('rezeptname').textContent;
-      this.recipeData['Name'] = rezeptname;
-      console.log(this.recipeData);
-      console.log('Test')
-      console.log('curr:' + this.recipeService.currentRecipe);
-      console.log('id:' + this.recipeData.RecipeID);
-      const body = this.recipeData; */
-       // this.http.put('https://localhost:44357/api/Recipes' + this.recipeService.currentRecipe, body, {headers: headers}).subscribe();
+      const body = this.recipeData;
+       this.http.put('https://localhost:44357/api/Recipes/' + this.recipeService.currentRecipe, body, {headers: headers}).subscribe();
+       // Updaten der Zutatenliste
+       const list = document.getElementById('Zutatenliste');
+      for (var i=0; i< list.childElementCount-1; i++){
+        var ingredientID = list.childNodes[i].firstChild.textContent;
+        var name = (list.childNodes[i].firstChild as HTMLInputElement).value;
+        this.ingredientData.push({IngredientID: ingredientID, Name: name, RecipeID: this.recipeService.currentRecipe});
+      }
+      for (var i=0; i<this.ingredientData.length; i++){
+        if (this.ingredientData[i].IngredientID !== ''){
+          this.http.delete('https://localhost:44357/api/Ingredients/' + this.ingredientData[i].IngredientID, {headers: headers}).subscribe();
+        }
+        this.ingredientData[i].IngredientID= undefined;
+        var data =this.ingredientData[i];
+        this.http.post('https://localhost:44357/api/Ingredients', data, {headers: headers}).subscribe();
+      }
+      // Updaten der Anweisungsliste
+      /* const aList = document.getElementById('Anweisungsliste');
+      for (var i=0; i< aList.childElementCount-1; i++){
+        var stepID = aList.childNodes[i].firstChild.textContent;
+        var describtion = (aList.childNodes[i].firstChild as HTMLInputElement).value;
+        this.stepsData.push({StepID: stepID, Number: i+1, describtion: describtion, RecipeID: this.recipeService.currentRecipe});
+      } */
+      this.http.get('https://localhost:44357/api/Steps/Find/' + this.recipeService.currentRecipe, {headers: headers}).subscribe(result => {
+        const jsonResult = JSON.parse(JSON.stringify(result));
+        for (var i=0; i<jsonResult.length; i++){
+          this.http.delete('https://localhost:44357/api/Steps/' + jsonResult[i].stepID, {headers: headers}).subscribe();
+        }
+      });
+      const steps = document.getElementById('Anweisungsliste').childNodes;
+      for (let i=0; i<steps.length-1; i++){
+        const name = (steps[i].firstChild as HTMLTextAreaElement).value;
+        console.log({StepID: undefined, Number: i+1, describtion: name, RecipeID: this.recipeService.currentRecipe});
+        this.stepsData.push({StepID: undefined, Number: i+1, describtion: name, RecipeID: this.recipeService.currentRecipe});
+        this.http.post('https://localhost:44357/api/Steps', this.stepsData[i], {headers: headers}).subscribe();
+      }
+      //Updaten der Kategorien
+      this.http.get('https://localhost:44357/api/AssignCategories/Find/' + this.recipeService.currentRecipe, {headers: headers}).subscribe( result =>
+      {
+        var categoryResult = JSON.parse(JSON.stringify(result));
+        for (var i=0; i< categoryResult.length; i++){
+          this.http.delete('https://localhost:44357/api/AssignCategories/' + categoryResult[i].assignCategoryId, {headers: headers}).subscribe();
+        }
+        for (let i=0; i<this.assignCategoryList.length; i++){
+          const body = {CategoryID: this.assignCategoryList[i], RecipeID: this.recipeService.currentRecipe};
+          this.http.post('https://localhost:44357/api/AssignCategories', body, {headers: headers}).subscribe();
+        }
+      }
+      );
     }
 
 
@@ -304,6 +378,15 @@ export class RecipesComponent implements OnInit {
         }
       }
     }
+  }
+  deleteRecipe(){
+    var recipeID = this.recipeService.currentRecipe;
+    this.http.delete('https://localhost:44357/api/Recipes/' + recipeID)
+      .subscribe((data) => {
+        console.log(data);
+        alert ('Rezept wurde gelöscht!');
+        this.router.navigateByUrl('homepage');
+      });
   }
 
 }

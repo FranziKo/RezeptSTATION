@@ -42,6 +42,20 @@ namespace REZEPTstation.Controllers
             return assignCategories;
         }
 
+        // GET: api/AssignCategories/Find/Recipe
+        [HttpGet("Find/{recipeId}")]
+        public async Task<ActionResult<IEnumerable<AssignCategories>>> GetIngredientsRecipe(int recipeId)
+        {
+            var categories = await _context.AssignCategories.Where(a => a.RecipeID.Equals(recipeId)).ToListAsync();
+
+            if (categories == null)
+            {
+                return NotFound();
+            }
+
+            return categories;
+        }
+
         // PUT: api/AssignCategories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

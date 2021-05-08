@@ -42,6 +42,21 @@ namespace REZEPTstation.Controllers
             return ingredients;
         }
 
+
+        // GET: api/Ingredients/Find/Recipe
+        [HttpGet("Find/{recipeId}")]
+        public async Task<ActionResult<IEnumerable<Ingredients>>> GetIngredientsRecipe(int recipeId)
+        {
+            var ingredients = await _context.Ingredients.Where(i => i.RecipeID.Equals(recipeId)).ToListAsync();
+
+            if (ingredients == null)
+            {
+                return NotFound();
+            }
+
+            return ingredients;
+        }
+
         // PUT: api/Ingredients/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

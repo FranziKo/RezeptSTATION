@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using REZEPTstation.Data;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 namespace REZEPTstation
 {
@@ -35,6 +37,7 @@ namespace REZEPTstation
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "REZEPTstation", Version = "v1" });
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +53,6 @@ namespace REZEPTstation
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "REZEPTstation v1"));
             }
-            
 
             app.UseHttpsRedirection();
 

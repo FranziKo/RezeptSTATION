@@ -3,12 +3,13 @@
     <br>
     <br>
 <h1 class="header" id="rezeptname" >Rezeptname </h1>
+    <mat-checkbox id="favorite" style="margin-left: 40px"><mat-icon>favorite_border</mat-icon></mat-checkbox>
     <button mat-stroked-button color="primary" class="btn_save" id="btn_save" type="submit">Speichern</button>
     <button mat-stroked-button color="primary" class="btn_cancel" id="btn_cancel">Abbrechen</button>
-  <button (click)="edit()" id="edit" style="margin-left: 150px" mat-icon-button aria-label="Example icon button with a vertical three dot icon" class="header">
+  <button (click)="edit()" id="edit" style="margin-left: 150px" mat-icon-button class="header">
     <mat-icon>edit</mat-icon>
   </button>
-  <button id="delete" mat-icon-button aria-label="Example icon button with a vertical three dot icon" class="header">
+  <button (click)="deleteRecipe()" id="delete" mat-icon-button class="header">
     <mat-icon>delete</mat-icon>
   </button>
     <hr>
@@ -24,7 +25,7 @@
   <mat-chip id="duration_label" color="primary" selected><mat-icon>
     query_builder</mat-icon>Dauer</mat-chip>
   <mat-chip id="difficulty_label" color="primary" selected >Schwierigkeit</mat-chip>
-  <mat-chip color="primary" selected>Autor</mat-chip>
+  <mat-chip id="author_label" color="primary" selected>Autor</mat-chip>
 </mat-chip-list>
 
 
@@ -49,29 +50,46 @@
     <br>
     <mat-radio-button value="1">Öffentlich</mat-radio-button> -->
     <div id="recipeData" style="display: none">
-      <mat-label>Bild hochalden: </mat-label>
-      <input id="picture" type="file" accept="image/*" (change)="uploadPicture()"/>
-      <br/>
-      <br/>
-    <mat-label>Dauer:</mat-label>
-    <input type = "text" id="duration"/>
-    <br/>
-    <br/>
-    <mat-label>Schwierigkeit:</mat-label>
-    <input type = "text" id="difficulty"/>
-    <br/>
-    <br/>
-      <mat-label>Öffentlich</mat-label>
-      <input type="checkbox" id="btn_visible"/>
-      <br/>
-      <br/>
+      <table>
+        <tr>
+          <td><mat-label>Bild hochalden: </mat-label></td>
+          <td>
+            <input id="picture" type="file" accept="image/*" (change)="uploadPicture()"/>
+          </td>
+        </tr>
+        <tr>
+          <td><mat-label>Dauer: </mat-label></td>
+          <td>
+            <input type = "text" id="duration"/>
+          </td>
+        </tr>
+        <tr>
+          <td>    <mat-label>Schwierigkeit: </mat-label></td>
+          <td>
+            <input type = "text" id="difficulty"/>
+          </td>
+        </tr>
+        <tr>
+          <td><mat-label>Öffentlich: </mat-label></td>
+          <td>
+            <input type="checkbox" id="btn_visible"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Kategorien</mat-label>
+              <mat-select [formControl]="categories" id ="categories" multiple>
+                <mat-option id="category" (onSelectionChange)="getCategory($event)" *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+
+
       <!-- <mat-checkbox value="1" id="btn_visible">Öffentlich</mat-checkbox> -->
-      <mat-form-field appearance="fill">
-        <mat-label>Kategorien</mat-label>
-        <mat-select [formControl]="categories" id ="categories" multiple>
-          <mat-option (onSelectionChange)="getCategory($event)" *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+
 
     </div>
 

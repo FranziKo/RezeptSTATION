@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace REZEPTstation.Models
@@ -14,6 +15,6 @@ namespace REZEPTstation.Models
         public bool Visible { get; set; }
         public int UserID { get; set; }
         public string PictureEncoded { get; set; }
-        
+
     }
 }

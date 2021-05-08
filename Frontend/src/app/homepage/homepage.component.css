@@ -1,3 +1,5 @@
+@import '~@angular/cdk/overlay-prebuilt.css';
+
 .content {
   margin: 20px;
 }
@@ -9,4 +11,25 @@
 
 .table {
   margin-left: 300px;
+}
+
+mat-label{
+  color: black;
+  margin-left: 10px;
+}
+
+mat-form-field{
+  background-color: #bdbdbd;
+  margin-left: 30px;
+}
+
+mat-checkbox{
+  background-color: #bdbdbd;
+  margin: 20px;
+}
+
+#filterbar{
+  background-color: #bdbdbd;
+  margin-bottom: 20px;
+  border-radius: 25px
 }
