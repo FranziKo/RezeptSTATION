@@ -13,6 +13,7 @@ import {FormControl} from "@angular/forms";
 export class HomepageComponent implements OnInit {
   categories = new FormControl();
   categoryList: string[] = [];
+  filteredRecipes: number[] = [];
   categoryIDName: { CategoryID: undefined, Name: string }[] = [];
   assignCategoryList: number[] = [];
   friends = new FormControl();
@@ -219,7 +220,7 @@ export class HomepageComponent implements OnInit {
           if (this.categoryIDName[i].Name === event.source.value) {
             for (let j = 0; j < this.assignCategoryList.length; j++) {
               if (this.assignCategoryList[j] === this.categoryIDName[i].CategoryID) {
-                delete this.assignCategoryList[j];
+                this.assignCategoryList.splice(j, 1);
               }
             }
           }
@@ -233,33 +234,39 @@ export class HomepageComponent implements OnInit {
       const last = document.getElementById('container').lastChild;
       document.getElementById('container').removeChild(last);
     }
-    var element = 0;
-    for (var i = 0; i < this.recipeList.length; i++) {
-      var show = false;
-      if (this.filterFriendList.includes(Number(this.recipeList[i].UserID)) || this.filterFriendList.length === 0 ) {
-        if (this.recipeList[i].UserID === this.userService.userData.userID || this.recipeList[i].Oeffentlich) {
-          if ((document.getElementById('filterFavorite-input') as HTMLInputElement).checked){
-            if (this.favoriteList.includes(this.recipeList[i].RecipeID)) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+    this.http.post('https://localhost:44357/api/AssignCategories/getRecipesByCategories', this.assignCategoryList, {headers:headers}).subscribe(result => {
+      var element = 0;
+      for (var i = 0; i < this.recipeList.length; i++) {
+        var show = false;
+        this.filteredRecipes = result.toString().split(',').map(x=>+x);
+        if (this.filteredRecipes.includes(this.recipeList[i].RecipeID) || this.filteredRecipes[0]===0){
+        if (this.filterFriendList.includes(Number(this.recipeList[i].UserID)) || this.filterFriendList.length === 0 ) {
+          if (this.recipeList[i].UserID === this.userService.userData.userID || this.recipeList[i].Oeffentlich) {
+            if ((document.getElementById('filterFavorite-input') as HTMLInputElement).checked){
+              if (this.favoriteList.includes(this.recipeList[i].RecipeID)) {
+                show = true;
+              }
+            } else {
               show = true;
             }
-          } else {
-            show = true;
-          }
-          if (show){
-            let template = this.fillTemplateRecipe(this.recipeList[i]);
-            const div = document.getElementById('container');
-            div.insertAdjacentHTML('beforeend', template);
-            div.getElementsByTagName('button')[element + 1].addEventListener('click', (e) => {
-              this.btn_open(this.recipeList[i].RecipeID, this.recipeList[i].Username);
-            })
-            if (this.favoriteList.includes(this.recipeList[i].RecipeID)){
-              (div.getElementsByTagName('input')[element + 1] as HTMLInputElement).checked = true;
+            if (show){
+              let template = this.fillTemplateRecipe(this.recipeList[i]);
+              const div = document.getElementById('container');
+              div.insertAdjacentHTML('beforeend', template);
+              div.getElementsByTagName('button')[element + 1].addEventListener('click', (e) => {
+                this.btn_open(this.recipeList[i].RecipeID, this.recipeList[i].Username);
+              })
+              if (this.favoriteList.includes(this.recipeList[i].RecipeID)){
+                (div.getElementsByTagName('input')[element + 1] as HTMLInputElement).checked = true;
+              }
+              element++;
             }
-            element++;
           }
         }
+        }
       }
-    }
+    });
   }
 
   getFriend(event: {
@@ -326,6 +333,5 @@ export class HomepageComponent implements OnInit {
       `  </div>`;
     return templateString;
   }
-
 }
 

@@ -98,6 +98,32 @@ namespace REZEPTstation.Controllers
             return CreatedAtAction("GetAssignCategories", new { id = assignCategories.AssignCategoryId }, assignCategories);
         }
 
+        // POST: api/getRecipesByCategories
+        [HttpPost("getRecipesByCategories")]
+        public async Task<ActionResult<List<int>>> GetRecipesByCategories(int[] categoryIds)
+        {
+            List<int> result = new List<int>();
+            var assignRecipeCategoryList = await _context.AssignCategories.Where(a => categoryIds.Contains(a.CategoryID)).ToListAsync();
+            for (int i=0; i<assignRecipeCategoryList.Count; i++)
+            {
+                var recipeID = assignRecipeCategoryList[i].RecipeID;
+                int sum = 0;
+                for (int j=0; j<assignRecipeCategoryList.Count; j++)
+                {
+                    if (assignRecipeCategoryList[j].RecipeID == recipeID)
+                    {
+                        sum++;
+                    }
+                }
+                if (sum == categoryIds.Length)
+                {
+                    result.Add(assignRecipeCategoryList[i].RecipeID);
+                }
+            }
+
+            return result;
+        }
+
         // DELETE: api/AssignCategories/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAssignCategories(int id)

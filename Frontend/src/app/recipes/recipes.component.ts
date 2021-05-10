@@ -370,7 +370,7 @@ export class RecipesComponent implements OnInit {
           if(this.categoryIDName[i].Name === event.source.value){
             for (let j=0; j<this.assignCategoryList.length; j++){
               if (this.assignCategoryList[j] === this.categoryIDName[i].CategoryID){
-                delete this.assignCategoryList[j];
+                this.assignCategoryList.splice(j, 1);
               }
             }
           }
