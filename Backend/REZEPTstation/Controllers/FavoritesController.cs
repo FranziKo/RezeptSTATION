@@ -42,6 +42,26 @@ namespace REZEPTstation.Controllers
             return favorites;
         }
 
+        // GET: api/Favorites/Remove/UserID/RecipeID
+        [HttpGet("Remove/{UserID}/{RecipeID}")]
+        public async Task<ActionResult<IEnumerable<Favorites>>> GetUser(int UserID, int RecipeID)
+        {
+            var favorite = await _context.Favorites.Where(f => f.UserID == UserID && f.RecipeID == RecipeID).ToListAsync();
+
+            if (favorite == null)
+            {
+                return NotFound();
+            }
+
+            for (int i=0; i<favorite.Count; i++)
+            {
+                _context.Favorites.Remove(favorite[i]);
+                await _context.SaveChangesAsync();
+            }
+           
+            return NoContent();
+        }
+
         // PUT: api/Favorites/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

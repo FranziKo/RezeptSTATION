@@ -13,7 +13,7 @@
       <mat-option id="friend" (onSelectionChange)="getFriend($event)" *ngFor="let friend of friendList" [value]="friend">{{friend}}</mat-option>
     </mat-select>
   </mat-form-field>
-    <mat-checkbox class="example-margin">nur Favoriten</mat-checkbox>
+    <mat-checkbox class="example-margin" id = 'filterFavorite'>nur Favoriten</mat-checkbox>
   <button mat-raised-button color="primary" (click)="filter()">Filtern</button>
   </div>
 </div>

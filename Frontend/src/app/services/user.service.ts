@@ -23,8 +23,7 @@ export class UserService {
   }
 
   postLogin(userData: any): void {
-    userData.password =sha256(userData.password).toString();
-
+    // userData.password =sha256(userData.password).toString();
     this.http.post('https://localhost:44357/api/Users/Login', userData)
       .subscribe((user) => {
         this.userData = user;

@@ -15,7 +15,6 @@ import {RecipeService} from "../services/recipe.service";
 
 
 export class RecipesComponent implements OnInit {
-  favoritesList: any = {RecipeID: 0, UserID: 0};
   categories = new FormControl();
   categoryList: string[] = [];
   categoryIDName: {CategoryID: undefined, Name: string}[] = [];
