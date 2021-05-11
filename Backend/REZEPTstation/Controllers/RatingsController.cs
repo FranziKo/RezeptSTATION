@@ -76,12 +76,34 @@ namespace REZEPTstation.Controllers
         // POST: api/Ratings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Rating>> PostRating(Rating rating)
+        public async Task<ActionResult> PostRating(Rating rating)
         {
-            _context.Rating.Add(rating);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRating", new { id = rating.RatingID }, rating);
+            bool existingRating = false;
+
+            var allRatings = await _context.Rating.ToListAsync();
+
+            allRatings.ForEach(r =>
+            {
+                if (r.UserID == rating.UserID && r.RecipeID == rating.RecipeID)
+                {
+                    existingRating = true;
+                    rating.RatingID = r.RatingID;
+                }
+            });
+
+            if (existingRating)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                _context.Rating.Add(rating);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetRating", new { id = rating.RatingID }, rating);
+            }
+            
         }
 
         // DELETE: api/Ratings/5

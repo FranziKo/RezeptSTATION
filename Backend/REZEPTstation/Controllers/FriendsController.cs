@@ -40,39 +40,7 @@ namespace REZEPTstation.Controllers
             return friends;
         }
 
-        /*
-        // PUT: api/Friends/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFriends(int id, Friends friends)
-        {
-            if (id != friends.FriendsID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(friends).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FriendsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        */
-
+       
         // POST: api/Friends
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -100,9 +68,5 @@ namespace REZEPTstation.Controllers
             return NoContent();
         }
 
-        private bool FriendsExists(int id)
-        {
-            return _context.Friends.Any(e => e.FriendsID == id);
-        }
     }
 }

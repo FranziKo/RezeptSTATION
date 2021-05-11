@@ -41,50 +41,6 @@ namespace REZEPTstation.Controllers
             return friendsRequest;
         }
 
-        /*
-        // PUT: api/FriendsRequests/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFriendsRequest(int id, FriendsRequest friendsRequest)
-        {
-            if (id != friendsRequest.RequestID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(friendsRequest).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FriendsRequestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        /*
-        // POST: api/FriendsRequests
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<FriendsRequest>> PostFriendsRequest(FriendsRequest friendsRequest)
-        {
-            _context.FriendsRequest.Add(friendsRequest);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetFriendsRequest", new { id = friendsRequest.RequestID }, friendsRequest);
-        }
-        */
-
         // POST: api/FriendsRequests
         [HttpPost]
         public async Task<ActionResult<FriendsRequest>> PostFriendsRequest(FriendsRequest friendsRequest)
@@ -144,12 +100,6 @@ namespace REZEPTstation.Controllers
 
             return NoContent();
         }
-
-        private bool FriendsRequestExists(int id)
-        {
-            return _context.FriendsRequest.Any(e => e.RequestID == id);
-        }
-
       
     }
            

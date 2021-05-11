@@ -4,7 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {Router} from "@angular/router";
 import {UserService} from "../services/user.service";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {RecipeService} from "../services/recipe.service";
 
 @Component({
@@ -23,6 +23,12 @@ export class RecipesComponent implements OnInit {
   ingredientData: {IngredientID: string, Name: string, RecipeID: number}[] = [];
   stepsData: {StepID: string, Number: number, describtion: string, RecipeID: number}[] = [];
   public newRecipe = 0;
+
+  ratingForm = new FormGroup( {
+    userID: new FormControl(this.userService.userData.userID),
+    recipeID: new FormControl(this.recipeService.currentRecipe),
+    score: new FormControl(5, Validators.required),
+  });
 
   constructor(private http: HttpClient, private router: Router, private userService: UserService, public recipeService: RecipeService) {
     http.get("https://localhost:44357/" + 'api/Categories', {responseType: 'json'}).subscribe(result => {
@@ -386,6 +392,16 @@ export class RecipesComponent implements OnInit {
         alert ('Rezept wurde gelöscht!');
         this.router.navigateByUrl('homepage');
       });
+  }
+
+  sendRating(): void {
+    this.http.post('https://localhost:44357/api/Ratings', this.ratingForm.value)
+      .subscribe((data) => {
+        alert('Die Bewertung wurde erfolgreich abgeschickt');
+      }, (error => {
+        alert('Die Bewertung konnte nicht abgeschickt werden.\n Eventuell haben Sie dieses Rezept bereits bewertet.');
+      }));
+
   }
 
 }
