@@ -30,6 +30,7 @@ namespace REZEPTstation.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Friends>>> GetFriends(int id)
         {
+            // get all friends of user with UserID = id
             var friends = await _context.Friends.Where(f => f.UserID1 == id || f.UserID2 == id).ToListAsync();
 
             if (friends == null)
@@ -42,7 +43,7 @@ namespace REZEPTstation.Controllers
 
        
         // POST: api/Friends
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // add new friends
         [HttpPost]
         public async Task<ActionResult<Friends>> PostFriends(Friends friends)
         {
@@ -53,6 +54,7 @@ namespace REZEPTstation.Controllers
         }
 
         // DELETE: api/Friends/5
+        // delete friends with friendsID = id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFriends(int id)
         {

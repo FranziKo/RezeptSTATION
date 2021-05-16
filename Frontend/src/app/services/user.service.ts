@@ -12,6 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  // register a new user -> set userData and redirect to homepage
   postRegister(userData: any): void {
     userData.password = sha256(userData.password).toString();
     this.http.post('https://gruppe4.testsites.info/api/Users/Register', userData)
@@ -21,6 +22,7 @@ export class UserService {
       }, (() => alert('Es gibt bereits einen Benutzer mit diesem Benutzername oder Mail')));
   }
 
+  // login a user -> set userData and redirect to homepage
   postLogin(userData: any): void {
     userData.password = sha256(userData.password).toString();
     this.http.post('https://gruppe4.testsites.info/api/Users/Login', userData)
@@ -30,6 +32,7 @@ export class UserService {
       }, (() => alert('Benutzername oder Passwort ist falsch!')));
   }
 
+  // logout -> set userData to default -> no user is logged in
   logout(): void {
     this.userData = {UserID: null, UserName: ''};
   }

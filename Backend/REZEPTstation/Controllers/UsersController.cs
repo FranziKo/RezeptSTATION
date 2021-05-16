@@ -44,6 +44,8 @@ namespace REZEPTstation.Controllers
         }
 
         // GET: api/Users/Find/Username
+        // find all users which contains name in their user name
+        // returns list of potential users
         [HttpGet("Find/{name}")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUser(string name)
         {
@@ -59,6 +61,7 @@ namespace REZEPTstation.Controllers
         }
 
         // POST: api/Users/Login
+        // check username and password for login
         [HttpPost("Login")]
         public async Task<ActionResult<UserDTO>> LoginUser(User user)
         {
@@ -83,11 +86,14 @@ namespace REZEPTstation.Controllers
 
 
         // POST: api/Users/Register
+        // add a new user
         [HttpPost("Register")]
         public async Task<ActionResult<User>> RegistertUser(User user)
         {
             List<User> userList = _context.User.ToList();
             var existingUser = false;
+
+            // check if there is an existing user with the same username or emal
             userList.ForEach(u =>
             {
                 if (u.Username==user.Username || u.Email==user.Email)
@@ -108,7 +114,7 @@ namespace REZEPTstation.Controllers
             }           
         }
 
-
+        // create data transfer object of user -> only userID and username
         private static UserDTO UserDTO(User user) =>
             new()
             {

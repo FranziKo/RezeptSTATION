@@ -27,6 +27,7 @@ namespace REZEPTstation.Controllers
         }
 
         // GET: api/FriendsRequests/5
+        // get all friends requests of the user with UserID = id
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<FriendsRequest>>> GetFriendsRequest(int id)
         {
@@ -42,6 +43,7 @@ namespace REZEPTstation.Controllers
         }
 
         // POST: api/FriendsRequests
+        // add a new friends requests
         [HttpPost]
         public async Task<ActionResult<FriendsRequest>> PostFriendsRequest(FriendsRequest friendsRequest)
         {
@@ -50,6 +52,7 @@ namespace REZEPTstation.Controllers
 
             bool alreadyExisting = false;
 
+            // check if there is an existing request
             requests.ForEach(r =>
             {
                 if (r.UserID1 == friendsRequest.UserID1 && r.UserID2 == friendsRequest.UserID2)
@@ -61,6 +64,8 @@ namespace REZEPTstation.Controllers
                     alreadyExisting = true;
                 }
             });
+
+            // check if they are friends
             friends.ForEach(f =>
             {
                 if (f.UserID1 == friendsRequest.UserID1 && f.UserID2 == friendsRequest.UserID2)
@@ -86,6 +91,7 @@ namespace REZEPTstation.Controllers
         
 
         // DELETE: api/FriendsRequests/5
+        // delete friends request with FriendsRequestID = id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFriendsRequest(int id)
         {

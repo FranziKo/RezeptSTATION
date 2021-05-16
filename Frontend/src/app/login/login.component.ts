@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitRegister(): void {
+    // check if password and confirm password is the same
     if ( this.registerForm.value.password === this.registerForm.value.confirmPassword) {
       const register = {
         userName: this.registerForm.value.user,

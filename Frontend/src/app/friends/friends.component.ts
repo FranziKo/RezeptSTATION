@@ -20,6 +20,7 @@ export class FriendsComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router, private http: HttpClient) { }
 
+  // is called by loading the friends page
   ngOnInit(): void {
     if (this.userService.userData.userID===null ||this.userService.userData.userID===undefined){
       this.router.navigateByUrl('login');
@@ -29,6 +30,7 @@ export class FriendsComponent implements OnInit {
     }
   }
 
+  // find all users with substring in name
   searchUsers(): void {
     var name = this.findFriendsForm.get('name').value;
     this.http.get('https://gruppe4.testsites.info/api/Users/Find/' + name)
@@ -37,6 +39,7 @@ export class FriendsComponent implements OnInit {
       }, (() => alert('Es konnten keine Benutzer gefunden werden!')));
   }
 
+  // sending a friends request if none already exists
   sendRequest(requestID: number): void {
     var userID1 = this.userService.userData.userID;
     if (requestID !== userID1) {
@@ -55,6 +58,7 @@ export class FriendsComponent implements OnInit {
     }
   }
 
+  // load all the users friends requests into friendsRequests
   loadRequest(): void {
     this.friendsRequests = [];
     var userID = this.userService.userData.userID;
@@ -80,6 +84,7 @@ export class FriendsComponent implements OnInit {
       }, ((error) => console.log(error)));
   }
 
+  // delete a friends request -> delete in database and remove from friendsRequests
   deleteRequest(request: any): void {
     this.http.delete('https://gruppe4.testsites.info/api/FriendsRequests/' + request.requestID)
       .subscribe((data) => {
@@ -87,6 +92,7 @@ export class FriendsComponent implements OnInit {
       })
   }
 
+  // accept a friends request -> insert a friend into database and delete the friends request
   confirmRequest(request: any): void {
     var friendsForm = new FormGroup({
       userID1: new FormControl(request.userID1),
@@ -105,6 +111,7 @@ export class FriendsComponent implements OnInit {
       }, (error => console.log(error)));
   }
 
+  // load all the friends of the user and add into list of myFriends
   loadFriends(): void {
     this.myFriends = [];
     var userID = this.userService.userData.userID;
@@ -147,6 +154,7 @@ export class FriendsComponent implements OnInit {
       }, ((error) => console.log(error)));
   }
 
+  // delete a friendship -> delete in database and remove from myFriends
   deleteFriend(friend: any): void {
     this.http.delete('https://gruppe4.testsites.info/api/Friends/' + friend.friendsID)
       .subscribe((data) => {
