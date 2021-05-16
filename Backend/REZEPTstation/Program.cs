@@ -18,7 +18,8 @@ namespace REZEPTstation
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateDbIfNotExists(host);
+
+            // CreateDbIfNotExists(host);
 
             host.Run();
         }
@@ -45,7 +46,7 @@ namespace REZEPTstation
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel().UseStartup<Startup>();
                 });
     }
 }

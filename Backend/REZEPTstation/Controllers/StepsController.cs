@@ -56,36 +56,6 @@ namespace REZEPTstation.Controllers
             return steps;
         }
 
-        // PUT: api/Steps/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSteps(int id, Steps steps)
-        {
-            if (id != steps.StepID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(steps).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StepsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         // POST: api/Steps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -112,11 +82,6 @@ namespace REZEPTstation.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool StepsExists(int id)
-        {
-            return _context.Steps.Any(e => e.StepID == id);
         }
     }
 }

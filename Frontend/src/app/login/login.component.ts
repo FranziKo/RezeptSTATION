@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
     userName: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required)
   });
 
   constructor(private userService: UserService) { }
@@ -25,7 +26,17 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitRegister(): void {
-    this.userService.postRegister(this.registerForm.value);
+    if ( this.registerForm.value.password === this.registerForm.value.confirmPassword) {
+      const register = {
+        userName: this.registerForm.value.user,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+      }
+      this.userService.postRegister(register);
+    }
+    else {
+      alert("Die Passwörter stimmen nicht überein.");
+    }
   }
 
   onSubmitLogin(): void {

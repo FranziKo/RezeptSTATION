@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿﻿﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +63,7 @@ namespace REZEPTstation.Controllers
         public async Task<ActionResult<UserDTO>> LoginUser(User user)
         {
             List<User> userList = _context.User.ToList();
+            await _context.SaveChangesAsync();
             var loginAcceptes = false;
             userList.ForEach(u =>
             {

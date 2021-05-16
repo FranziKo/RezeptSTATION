@@ -27,7 +27,8 @@
         Login
       </button>
     </form>
-    <a (click)="account = !account">Noch kein Konto? -> Registrieren</a>
+    <label>Noch kein Konto? → </label>
+    <button mat-button color="primary" (click)="account = !account">Registrieren</button>
   </ng-template>
 
   <ng-template #register>
@@ -62,7 +63,7 @@
           <td>Password bestätigen:</td>
           <td>
             <label>
-              <input name="password2" type="password" required>
+              <input name="password2" type="password" formControlName="confirmPassword" required>
             </label>
           </td>
         </tr>
@@ -71,7 +72,7 @@
         Registrieren
       </button>
     </form>
-    <a (click)="account = !account">Zurück zum Login</a>
+    <button mat-button color="primary" (click)="account = !account">Zurück zum Login</button>
   </ng-template>
 </div>
 

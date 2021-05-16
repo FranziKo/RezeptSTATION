@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,36 +42,21 @@ namespace REZEPTstation.Controllers
             return rating;
         }
 
-        // PUT: api/Ratings/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRating(int id, Rating rating)
+        // GET: api/Ratings/Find/RecipeId
+        [HttpGet("Find/{recipeId}")]
+        public async Task<ActionResult<IEnumerable<Rating>>> GetRatingByRecipe(int recipeId)
         {
-            if (id != rating.RatingID)
+            var rating = await _context.Rating.Where(r => r.RecipeID.Equals(recipeId)).ToListAsync();
+
+            if (rating == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(rating).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RatingExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return rating;
         }
+
+
 
         // POST: api/Ratings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

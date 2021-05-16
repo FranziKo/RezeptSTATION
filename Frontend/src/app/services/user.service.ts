@@ -13,18 +13,17 @@ export class UserService {
   constructor(private http: HttpClient, private router: Router) { }
 
   postRegister(userData: any): void {
-    userData.password =sha256(userData.password).toString();
-    this.http.post('https://localhost:44357/api/Users/Register', userData)
-      .subscribe((user:{UserID: number, UserName: string}) => {
+    userData.password = sha256(userData.password).toString();
+    this.http.post('https://gruppe4.testsites.info/api/Users/Register', userData)
+      .subscribe((user: {UserID: number, UserName: string}) => {
         this.userData = user;
-        console.log(this.userData);
         this.router.navigateByUrl('homepage');
       }, (() => alert('Es gibt bereits einen Benutzer mit diesem Benutzername oder Mail')));
   }
 
   postLogin(userData: any): void {
-    userData.password =sha256(userData.password).toString();
-    this.http.post('https://localhost:44357/api/Users/Login', userData)
+    userData.password = sha256(userData.password).toString();
+    this.http.post('https://gruppe4.testsites.info/api/Users/Login', userData)
       .subscribe((user) => {
         this.userData = user;
         this.router.navigateByUrl('homepage');

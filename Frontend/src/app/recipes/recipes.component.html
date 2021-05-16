@@ -5,10 +5,10 @@
 <h1 class="header" id="rezeptname" >Rezeptname </h1>
     <button mat-stroked-button color="primary" class="btn_save" id="btn_save" type="submit">Speichern</button>
     <button mat-stroked-button color="primary" class="btn_cancel" id="btn_cancel">Abbrechen</button>
-  <button (click)="edit()" id="edit" style="margin-left: 150px" mat-icon-button class="header">
+  <button (click)="edit()" id="edit" style="margin-left: 150px" *ngIf="Visible" mat-icon-button class="header">
     <mat-icon>edit</mat-icon>
   </button>
-  <button (click)="deleteRecipe()" id="delete" mat-icon-button class="header">
+  <button (click)="deleteRecipe()" id="delete" mat-icon-button class="header" *ngIf="Visible">
     <mat-icon>delete</mat-icon>
   </button>
     <hr>
@@ -54,6 +54,12 @@
           <td><mat-label>Bild hochalden: </mat-label></td>
           <td>
             <input id="picture" type="file" accept="image/*" (change)="uploadPicture()"/>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button mat-button color="primary" (click)="deletePic()"> Bild löschen </button>
           </td>
         </tr>
         <tr>
@@ -132,7 +138,8 @@
       </label>
       <button (click)="sendRating()">Bewertung abschicken</button>
     </form>
-
+<br>
+<br>
   </div>
 
 </div>

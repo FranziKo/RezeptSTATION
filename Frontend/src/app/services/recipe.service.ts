@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class RecipeService {
   currentRecipe: number = undefined;
+  Visible = true;
   constructor() {
   }
 

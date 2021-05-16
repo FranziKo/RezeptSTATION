@@ -62,36 +62,7 @@ namespace REZEPTstation.Controllers
             return NoContent();
         }
 
-        // PUT: api/Favorites/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFavorites(int id, Favorites favorites)
-        {
-            if (id != favorites.FavoriteID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(favorites).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FavoritesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+        
 
         // POST: api/Favorites
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -118,11 +89,6 @@ namespace REZEPTstation.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool FavoritesExists(int id)
-        {
-            return _context.Favorites.Any(e => e.FavoriteID == id);
         }
     }
 }

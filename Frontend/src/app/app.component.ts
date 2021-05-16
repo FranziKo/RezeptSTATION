@@ -19,13 +19,14 @@ export class AppComponent {
   }
 
   addRecipe(){
+    this.recipeService.currentRecipe = undefined;
+    this.recipeService.Visible=true;
     this.router.navigateByUrl('recipes');
-    let element: HTMLElement = document.getElementById('edit') as HTMLElement;
-    element.click();
 
   }
 
   cancel(){
     this.recipeService.currentRecipe = undefined;
+    this.recipeService.Visible=true;
   }
 }
