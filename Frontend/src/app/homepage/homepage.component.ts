@@ -239,41 +239,43 @@ export class HomepageComponent implements OnInit {
       var element = 0;
       for (var i = 0; i < this.recipeList.length; i++) {
         var show = false;
-        this.filteredRecipes = result.toString().split(',').map(x=>+x);
-        if (this.filteredRecipes.includes(this.recipeList[i].RecipeID) || this.assignCategoryList.length === 0){
-        if (this.filterFriendList.includes(Number(this.recipeList[i].UserID)) || this.filterFriendList.length === 0 ) {
-          if (this.recipeList[i].UserID === this.userService.userData.userID || this.recipeList[i].Oeffentlich) {
-            if ((document.getElementById('filterFavorite-input') as HTMLInputElement).checked){
-              if (this.favoriteList.includes(this.recipeList[i].RecipeID)) {
-                show = true;
+        this.filteredRecipes = result.toString().split(',').map(x => +x);
+        if ((this.friendIDList.includes(Number(this.recipeList[i].UserID)) && this.recipeList[i].Oeffentlich) || this.recipeList[i].UserID === this.userService.userData.userID) {
+          if (this.filteredRecipes.includes(this.recipeList[i].RecipeID) || this.assignCategoryList.length === 0) {
+            if (this.filterFriendList.includes(Number(this.recipeList[i].UserID)) || this.filterFriendList.length === 0) {
+              if (this.recipeList[i].UserID === this.userService.userData.userID || this.recipeList[i].Oeffentlich) {
+                if ((document.getElementById('filterFavorite-input') as HTMLInputElement).checked) {
+                  if (this.favoriteList.includes(this.recipeList[i].RecipeID)) {
+                    show = true;
+                  }
+                } else {
+                  show = true;
+                }
+                if (show) {
+                  let template = this.fillTemplateRecipe(this.recipeList[i]);
+                  const div = document.getElementById('searchresult');
+                  div.insertAdjacentHTML('beforeend', template);
+                  let recipeID = this.recipeList[i].RecipeID;
+                  let username = this.recipeList[i].Username;
+                  let userId = this.recipeList[i].UserID;
+                  this.empty = false;
+                  div.getElementsByTagName('button')[element].addEventListener('click', (e) => {
+                    this.btn_open(recipeID, username);
+                  });
+                  if (this.favoriteList.includes(this.recipeList[i].RecipeID)) {
+                    (div.getElementsByTagName('input')[element] as HTMLInputElement).checked = true;
+                  }
+                  const index = element;
+                  div.getElementsByTagName('input')[element].addEventListener('click', (e) => {
+                    this.favorite(recipeID, userId, index);
+                  });
+                  element++;
+                } else {
+                  this.empty = true;
+                }
               }
-            } else {
-              show = true;
-            }
-            if (show){
-              let template = this.fillTemplateRecipe(this.recipeList[i]);
-              const div = document.getElementById('searchresult');
-              div.insertAdjacentHTML('beforeend', template);
-              let recipeID = this.recipeList[i].RecipeID;
-              let username = this.recipeList[i].Username;
-              let userId = this.recipeList[i].UserID;
-              this.empty = false;
-              div.getElementsByTagName('button')[element].addEventListener('click', (e) => {
-                this.btn_open(recipeID, username);
-              });
-              if (this.favoriteList.includes(this.recipeList[i].RecipeID)){
-                (div.getElementsByTagName('input')[element] as HTMLInputElement).checked = true;
-              }
-              const index = element;
-              div.getElementsByTagName('input')[element].addEventListener('click', (e) => {
-                this.favorite(recipeID, userId, index);
-              });
-              element++;
-            } else {
-              this.empty= true;
             }
           }
-        }
         }
       }
     });
