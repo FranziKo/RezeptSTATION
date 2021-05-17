@@ -42,7 +42,7 @@ namespace REZEPTstation.Controllers
             return ingredients;
         }
 
-
+        // Find all ingredients of a recipe
         // GET: api/Ingredients/Find/Recipe
         [HttpGet("Find/{recipeId}")]
         public async Task<ActionResult<IEnumerable<Ingredients>>> GetIngredientsRecipe(int recipeId)
@@ -58,7 +58,6 @@ namespace REZEPTstation.Controllers
         }
 
         // PUT: api/Ingredients/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutIngredients(int id, Ingredients ingredients)
         {
@@ -89,7 +88,6 @@ namespace REZEPTstation.Controllers
         }
 
         // POST: api/Ingredients
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Ingredients>> PostIngredients(Ingredients ingredients)
         {

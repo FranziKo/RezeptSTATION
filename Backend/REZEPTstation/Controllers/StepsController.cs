@@ -42,6 +42,7 @@ namespace REZEPTstation.Controllers
             return steps;
         }
 
+        // find all steps of a recipe
         // GET: api/Steps/Find/Recipe
         [HttpGet("Find/{recipeId}")]
         public async Task<ActionResult<IEnumerable<Steps>>> GetStepsRecipe(int recipeId)

@@ -42,6 +42,7 @@ namespace REZEPTstation.Controllers
             return rating;
         }
 
+        // Find all the ratings of a recipe
         // GET: api/Ratings/Find/RecipeId
         [HttpGet("Find/{recipeId}")]
         public async Task<ActionResult<IEnumerable<Rating>>> GetRatingByRecipe(int recipeId)
@@ -59,7 +60,6 @@ namespace REZEPTstation.Controllers
 
 
         // POST: api/Ratings
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult> PostRating(Rating rating)
         {

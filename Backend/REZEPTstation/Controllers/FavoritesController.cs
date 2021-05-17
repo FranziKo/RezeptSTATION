@@ -42,6 +42,7 @@ namespace REZEPTstation.Controllers
             return favorites;
         }
 
+        // remove an entry by the UserID and RecipeID
         // GET: api/Favorites/Remove/UserID/RecipeID
         [HttpGet("Remove/{UserID}/{RecipeID}")]
         public async Task<ActionResult<IEnumerable<Favorites>>> GetUser(int UserID, int RecipeID)
@@ -65,7 +66,6 @@ namespace REZEPTstation.Controllers
         
 
         // POST: api/Favorites
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Favorites>> PostFavorites(Favorites favorites)
         {

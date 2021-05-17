@@ -11,7 +11,7 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  empty = true;
+  empty = true; // if true show the label 'Keine Rezepte vorhanden'
   categories = new FormControl();
   categoryList: string[] = [];
   filteredRecipes: number[] = [];
@@ -31,6 +31,8 @@ export class HomepageComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService, private http: HttpClient, private recipeService: RecipeService) {
     this.empty = true;
+
+    // loads all users to get the ID and username of all possible friends
     http.get("https://gruppe4.testsites.info/" + 'api/Users', {responseType: 'json'}).subscribe(result => {
       const jsonResult = JSON.parse(JSON.stringify(result));
       for (var i = 0; i < jsonResult.length; i++) {
@@ -38,6 +40,8 @@ export class HomepageComponent implements OnInit {
         this.friendIDName.push({UserID: obj.userID, Name: obj.username});
       }
     }, error => console.error(error));
+
+    // loads all categories into categoryList to be able to show them in the select
     http.get("https://gruppe4.testsites.info/" + 'api/Categories', {responseType: 'json'}).subscribe(result => {
       const jsonResult = JSON.parse(JSON.stringify(result));
       for (var i = 0; i < jsonResult.length; i++) {
@@ -46,6 +50,8 @@ export class HomepageComponent implements OnInit {
         this.categoryIDName.push({CategoryID: obj.categoryID, Name: obj.name});
       }
     }, error => console.error(error));
+
+    //get all friends of the user and loads them into friendIDList
     http.get("https://gruppe4.testsites.info/" + 'api/Friends/' + this.userService.userData.userID, {responseType: 'json'}).subscribe(result => {
       const jsonResult = JSON.parse(JSON.stringify(result));
       for (var i = 0; i < jsonResult.length; i++) {
@@ -55,6 +61,8 @@ export class HomepageComponent implements OnInit {
           this.friendIDList.push(jsonResult[i].userID1);
         }
       }
+
+      // loads the usernames of all friends
       for (var i = 0; i < this.friendIDList.length; i++) {
         http.get("https://gruppe4.testsites.info/" + 'api/Users/' + this.friendIDList[i], {responseType: 'json'}).subscribe(result => {
           const jsonResult = JSON.parse(JSON.stringify(result));
@@ -67,9 +75,12 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // if there is no user, navigate to login
     if (this.userService.userData.userID===null||this.userService.userData.userID===undefined){
        this.router.navigateByUrl('login');
      }
+
+    // load all ratings and push them into ratingList
     this.http.get('https://gruppe4.testsites.info/api/Ratings').subscribe(result => {
       for (var i=0; i< JSON.parse(JSON.stringify(result)).length; i++){
         const recipeID = JSON.parse(JSON.stringify(result))[i].recipeID;
@@ -82,8 +93,11 @@ export class HomepageComponent implements OnInit {
         this.favoriteList.push(JSON.parse(JSON.stringify(result))[i].recipeID);
       }
     });
+
+    // loads all reicpes
     this.http.get('https://gruppe4.testsites.info/api/Recipes').subscribe(result => {
       for (let i = 0; i < JSON.parse(JSON.stringify(result)).length; i++) {
+        // calculates the average rating of a recipe
         let sum =0;
         let count =0;
         for (let j=0; j < this.ratingList.length; j++){
@@ -93,12 +107,16 @@ export class HomepageComponent implements OnInit {
           }
         }
         const avg = sum / count;
+
+        // if there is a picture, use this as a source, if there is none use a default picture
         let imgSrc: string;
         if (result[i].pictureEncoded === null || result[i].pictureEncoded === '') {
           imgSrc = "https://cdn.pixabay.com/photo/2013/04/01/21/30/photo-99135_1280.png";
         } else {
           imgSrc = result[i].pictureEncoded;
         }
+
+        // push all information of the result into recipeList
         this.recipeList.push({
           RecipeID: result[i].recipeID,
           Rezeptname: result[i].name,
@@ -115,6 +133,7 @@ export class HomepageComponent implements OnInit {
         recipeID = result[i].recipeID;
         rezeptname = result[i].name;
       }
+      // get username of the author of the recipe and push it into recipeList
       this.http.get('https://gruppe4.testsites.info/api/Users').subscribe(result => {
         for (let j = 0; j < JSON.parse(JSON.stringify(result)).length; j++) {
           for (let i = 0; i < this.recipeList.length; i++) {
@@ -123,14 +142,15 @@ export class HomepageComponent implements OnInit {
             }
           }
         }
+
+        // for each recipe in the recipeList fill the template with the relevant information and add EventListeners to the buttons
+        // --> then insert the template to the HTML
         var element = 0;
         for (let i = 0; i < this.recipeList.length; i++) {
-
-
           let template = this.fillTemplateRecipe(this.recipeList[i]);
-
           if ((this.friendIDList.includes(Number(this.recipeList[i].UserID)) && this.recipeList[i].Oeffentlich) || this.recipeList[i].UserID === this.userService.userData.userID) {
             const div = document.getElementById('searchresult');
+            // if a recipe is added, empty gets false, so that the label 'Keine Rezepte vorhanden' is not shown
             this.empty = false;
             div.insertAdjacentHTML('beforeend', template);
             div.getElementsByTagName('button')[element].addEventListener('click', (e) => {
@@ -152,8 +172,11 @@ export class HomepageComponent implements OnInit {
   }
 
   btn_open(currentRecipe: number, author: string) {
+    // navigates to recipes and gets the current RecipeID from the recipeService to show the actual recipe
     this.router.navigateByUrl('recipes');
     this.recipeService.currentRecipe = currentRecipe;
+
+    //if the recipe is not an own recipe, set the visibility of the edit and delete button to false
     for (let i=0; i<this.recipeList.length; i++){
       if (currentRecipe === Number(this.recipeList[i].RecipeID)){
         if (this.userService.userData.userID !== this.recipeList[i].UserID){
@@ -162,6 +185,7 @@ export class HomepageComponent implements OnInit {
       }
 
     }
+    // get all information of the current recipe and insert them into the relative elements
     this.http.get("https://gruppe4.testsites.info/" + 'api/Recipes/' + this.recipeService.currentRecipe, {responseType: 'json'}).subscribe(result => {
       const jsonResult = JSON.parse(JSON.stringify(result));
       const name = document.getElementById('rezeptname');
@@ -177,6 +201,8 @@ export class HomepageComponent implements OnInit {
         img.src = jsonResult.pictureEncoded;
       }
     });
+
+    // get all ingredients of the current recipe and insert them into the Ingredientlist
     this.http.get("https://gruppe4.testsites.info/" + 'api/Ingredients/Find/' + this.recipeService.currentRecipe, {responseType: 'json'}).subscribe(result => {
       const jsonResult = JSON.parse(JSON.stringify(result));
       for (let i = 0; i < jsonResult.length; i++) {
@@ -187,6 +213,8 @@ export class HomepageComponent implements OnInit {
         list.insertBefore(ingredient, last);
       }
     });
+
+    // get all steps of the current recipe and insert them into the Sepslist
     this.http.get("https://gruppe4.testsites.info/" + 'api/Steps/Find/' + this.recipeService.currentRecipe, {responseType: 'json'}).subscribe(result => {
       const jsonResult = JSON.parse(JSON.stringify(result));
       for (var listelement = 1; listelement <= jsonResult.length; listelement++) {
@@ -203,6 +231,7 @@ export class HomepageComponent implements OnInit {
     });
   }
 
+  // adds categories to the assignCategoryList, if it gets checked and removes it from the list if it gets unchecked
   getCategory(event: {
     isUserInput: any;
     source: { value: any; selected: any };
@@ -228,29 +257,39 @@ export class HomepageComponent implements OnInit {
     }
   }
 
+  // gets called when the filter button is clicked
   filter() {
     this.empty = true;
+    // remove all recipes that are currently shown
     const recipes = document.getElementsByClassName('rezept');
     while(recipes[0]){
       document.getElementById('searchresult').removeChild(recipes[0]);
     }
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+
+    // gets all recipes that fit to the selected categories
     this.http.post('https://gruppe4.testsites.info/api/AssignCategories/getRecipesByCategories', this.assignCategoryList, {headers:headers}).subscribe(result => {
       var element = 0;
       for (var i = 0; i < this.recipeList.length; i++) {
         var show = false;
         this.filteredRecipes = result.toString().split(',').map(x => +x);
+        // checks if the recipe is either of a friend or a own recipe
         if ((this.friendIDList.includes(Number(this.recipeList[i].UserID)) && this.recipeList[i].Oeffentlich) || this.recipeList[i].UserID === this.userService.userData.userID) {
+          // shows recipes if it either fits to the selected recipes or if no categories are selected
           if (this.filteredRecipes.includes(this.recipeList[i].RecipeID) || this.assignCategoryList.length === 0) {
+            // shows recipe if it either fits to the selected friends or if no friends are selected
             if (this.filterFriendList.includes(Number(this.recipeList[i].UserID)) || this.filterFriendList.length === 0) {
+              // shows recipe if its either an own recipe or if it's a public recipe
               if (this.recipeList[i].UserID === this.userService.userData.userID || this.recipeList[i].Oeffentlich) {
                 if ((document.getElementById('filterFavorite-input') as HTMLInputElement).checked) {
+                  // shows recipe if favorite button is selected and the recipe is a favorite
                   if (this.favoriteList.includes(this.recipeList[i].RecipeID)) {
                     show = true;
                   }
                 } else {
                   show = true;
                 }
+                // if show was set to true, show the recipe and add the template to the html, and add the eventListeners
                 if (show) {
                   let template = this.fillTemplateRecipe(this.recipeList[i]);
                   const div = document.getElementById('searchresult');
@@ -280,7 +319,7 @@ export class HomepageComponent implements OnInit {
       }
     });
   }
-
+  // adds friends to the filterFriendList if it gets checked and removes it from the list if it gets unchecked
   getFriend(event: {
     isUserInput: any;
     source: { value: any; selected: any };
@@ -305,8 +344,9 @@ export class HomepageComponent implements OnInit {
       }
     }
   }
+
+  // if favorite gets checked, post it as a Favorite, if it gets unchecked, remove it
   favorite(currentRecipe: number, user: string, index: number){
-    //alert("index:"+index);
     var body= {RecipeID: 0, UserID: ''};
     body.UserID = user;
     const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
@@ -321,6 +361,7 @@ export class HomepageComponent implements OnInit {
     }
   }
 
+  // fill the template with the information of the recipe
   fillTemplateRecipe(recipe: any): string{
     var autor = recipe.Username;
     var rezeptname = recipe.Rezeptname;
@@ -364,6 +405,7 @@ export class HomepageComponent implements OnInit {
       `  </div>`;
     return templateString;
   }
+  // is called when clicking the button 'Rezept hinzufügen' and navigates to recipes
   add(): void{
     this.router.navigateByUrl('recipes');
   }

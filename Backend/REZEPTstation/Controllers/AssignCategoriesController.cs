@@ -42,6 +42,7 @@ namespace REZEPTstation.Controllers
             return assignCategories;
         }
 
+        // Find all categories of a Recipe
         // GET: api/AssignCategories/Find/Recipe
         [HttpGet("Find/{recipeId}")]
         public async Task<ActionResult<IEnumerable<AssignCategories>>> GetIngredientsRecipe(int recipeId)
@@ -57,7 +58,6 @@ namespace REZEPTstation.Controllers
         }
 
         // PUT: api/AssignCategories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAssignCategories(int id, AssignCategories assignCategories)
         {
@@ -88,7 +88,6 @@ namespace REZEPTstation.Controllers
         }
 
         // POST: api/AssignCategories
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<AssignCategories>> PostAssignCategories(AssignCategories assignCategories)
         {
@@ -98,6 +97,7 @@ namespace REZEPTstation.Controllers
             return CreatedAtAction("GetAssignCategories", new { id = assignCategories.AssignCategoryId }, assignCategories);
         }
 
+        // get all recipes that fit to all categories in the transferred array of categories
         // POST: api/getRecipesByCategories
         [HttpPost("getRecipesByCategories")]
         public async Task<ActionResult<List<int>>> GetRecipesByCategories(int[] categoryIds)
